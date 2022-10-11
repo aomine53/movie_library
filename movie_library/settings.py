@@ -82,12 +82,8 @@ WSGI_APPLICATION = 'movie_library.wsgi.application'
 
 DATABASES = {
    'default': {
-        'ENGINE'  : 'django.db.backends.mysql', # <-- UPDATED line 
-        'NAME'    : 'mytestdb',                 # <-- UPDATED line 
-        'USER'    : 'test',                     # <-- UPDATED line
-        'PASSWORD': 'Secret_1234',              # <-- UPDATED line
-        'HOST'    : '127.0.0.1',                # <-- UPDATED line
-        'PORT'    : '3306',
+        'ENGINE'  : 'django.db.backends.sqlite3', 
+        'NAME'    : BASE_DIR / 'db.sqlite3',                 
     }
 }
 
