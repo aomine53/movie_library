@@ -1,0 +1,45 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css'%}">
+    <link rel="stylesheet" href=" {% static 'css/login/style.css'%}">
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>  
+    <title>Login Page</title>
+</head>
+<body>
+    {% if request.method == 'GET' %}
+    <div class="container">
+        <h1 class="text-center" style="color: white; margin-top: 3.5rem;">MoviesDB</h1>
+    </div>
+    <div class="card">
+        <h3 class="card-header">Sign in</h3>
+            <article class="card-body">
+                <form action="/" method="POST">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label>Enter Username</label>
+                        <input type="text" class="form-control" name="username" placeholder="username">
+                    </div>
+                    <div class="form-group">
+                        <label>Enter Password</label>
+                        <input type="password" name="password" class="form-control" placeholder="********">
+                    </div>
+                    <button type="submit" class="btn btn-block" style="background-color: #ffc478;">Login</button>
+                    <p>Don't have account? <a href="/register">Register here.</a></p>
+                </form>
+            </article>
+    </div>
+    {% else %}
+        <h2 class="message">{{message}}</h2>
+        {% if request.user.is_authenticated %}
+        <h2 class="message"><a href="/logout">Logout</a></h2>
+        {% else %}
+        <h2 class="message"><a href="/">Login page.</a></h2>
+        {% endif %}
+    {% endif %}
+    
+</body>
+</html>

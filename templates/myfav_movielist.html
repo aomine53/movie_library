@@ -1,0 +1,111 @@
+{%extends 'base.html'%}
+{%block content%}
+<div class="container-fluid py-3">
+    <h4>{{ ids|json_script:"ids" }}</h4>
+    <div class="row justify-content-center">
+      <div class="col-5"><h5>Favourite List Name: <b>{{list_name}}</b></h5></div>
+      <div class="col-5"><h5>Created by: <b>{{created_by}}</b></h5></div>
+    </div>
+</div>
+<div class="container-fluid" style="min-height: 80vh;">
+    <div class="row" id="movie_list">
+    </div>
+</div>
+<div
+      class="modal fade"
+      id="moreinfo"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="title_name">Detail Info</h5>
+            
+          </div>
+          <div class="modal-body">
+            <div class="container-fluid">
+              <div class="row">
+                <div class="col"><img id="poster" width="200" src="https://m.media-amazon.com/images/M/MV5BYjcyYTk0N2YtMzc4ZC00Y2E0LWFkNDgtNjE1MzZmMGE1YjY1XkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_SX300.jpg" alt="Image Not Loading">
+                </div>
+                <div class="col">                  
+                  <h6 id="release_date">Release Date : </h6>
+                  <h6 id="runtime">Runtime</h6>
+                  <h6 id="genre">Genre</h6>
+                  <h6 id="director">Director</h6>
+                  <h6 id="imdb_rating">ImDB Rating</h6>
+                  <h6 id="plot">Plot</h6>
+                </div>
+              </div>
+          </div>
+          <div class="modal-footer">
+            <button
+              id="close_info"
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+
+<script>
+    const ids = JSON.parse(document.getElementById('ids').textContent);
+    console.log(ids);
+    let api_obj = {};
+    api_obj['apikey'] = '4cf0ae48';
+    for(id of ids){
+        api_obj['i'] = id;
+    fetch('http://www.omdbapi.com/?' + new URLSearchParams(api_obj)).then(response => response.json())
+    .then(data =>
+      document.getElementById('movie_list').innerHTML += `<div class="col-lg-3 mb-4 mt-2">
+    <div class="card" onclick="showMoreInfo('${data.imdbID}')">
+        <img class="card-img-top" width="100" height="400" src="${data.Poster}" alt="Image Not Loading">
+        <div class="card-body">
+            <h5 class="card-title">${data.Title}</h5>
+            <ul class="list-group list-group-flush">
+            <li class="list-group-item"><b>IMDb ID</b> : ${data.imdbID}</li>
+            <li class="list-group-item"><b>Year</b> : ${data.Year}</li>
+            <li class="list-group-item"><b>Type</b> : ${data.Type}</li>
+          </ul>
+        </div>
+    
+    </div>
+</div>`
+    );
+    }
+
+
+    function showMoreInfo(imdbid) {
+  $('#moreinfo').modal('show')
+  api_obj = {};
+  api_obj['apikey'] = '4cf0ae48';
+  api_obj['i'] = imdbid;
+  console.log(api_obj);
+  fetch('http://www.omdbapi.com/?' + new URLSearchParams(api_obj)).then(response => response.json())
+    .then(data => {
+      console.log(data.Title)
+      document.getElementById('title_name').textContent = data.Title;
+      document.getElementById('release_date').innerHTML = `<span class='text-muted'>Release Data : </span>` + data.Released
+      document.getElementById('runtime').innerHTML = `<span class='text-muted'>Runtime : </span>` + data.Runtime
+      document.getElementById('genre').innerHTML = `<span class='text-muted'>Genre : </span>` + data.Genre
+      document.getElementById('director').innerHTML = `<span class='text-muted'>Director : </span>` + data.Director
+      document.getElementById('imdb_rating').innerHTML = `<span class='text-muted'>IMDb Rating : </span>` + data.imdbRating
+      document.getElementById('poster').src = data.Poster
+      document.getElementById('plot').innerHTML = `<span class='text-muted'>Plot : </span>` + data.Plot
+
+    }
+    );
+}
+
+document.getElementById('close_info').addEventListener('click', () => {
+  $('#moreinfo').modal('hide')
+})
+</script>
+{%endblock%}

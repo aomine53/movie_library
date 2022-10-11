@@ -1,0 +1,29 @@
+<nav class="navbar sticky-top navbar-expand-lg" style="background-color: #2C3639">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="home">
+      <img src="/static/logo3.png" alt="" width="30" height="30" class="d-inline-block align-text-top">
+      MoviesDB
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01"
+      aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+      <ul class="navbar-nav me-auto mb-5 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="home">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="/MyFavorites">My Lists</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="/PublicFavorites">Public Lists</a>
+        </li>
+      </ul>
+      <h5 class=" text-white" style="margin-right: 50px;margin-top: 10px;">Hello, {{user.username}}</h5>
+      <a class="navbar-text text-white" href="{% url 'logout_page' %}">Logout
+        <i class="fas fa-sign-out-alt"></i>
+      </a>
+    </div>
+  </div>
+</nav>

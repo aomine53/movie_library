@@ -1,0 +1,108 @@
+
+{%extends 'base.html'%}
+{%block content%}
+<div class="container py-3">
+    <div class="row justify-content-center">
+      <div class="col-6"><input type="text" class="form-control" id="title" placeholder="Enter Title of the movie"></div>
+      <div class="col-2"><input type="number" class="form-control" id="year" placeholder="Year of Release"></div>
+      <div class="col-2"><select class="form-select" id="type" aria-label="Default select example">
+        <option selected>Select Type</option>
+        <option value="1">Movie</option>
+        <option value="2">Series</option>
+      </select></div>
+      <div class="col"><button type="button" id="search" class="btn btn-primary" style="background-color: #ffc478 ;"><i class="fas fa-search"></i></button></div>
+    </div>
+</div>
+<div class="container-fluid" style="min-height: 80vh;">
+    <div class="row" id="movie_list">
+    </div>
+</div>
+<div
+      class="modal fade"
+      id="addtolistmodel"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="edit_heading">Add To Favourite List</h5>
+            
+          </div>
+          <div class="modal-body">
+            <div class="list-group">
+                {%if fav_list%}
+                {%for obj in fav_list%}
+                <button type="button" id="select_list" onclick="ex('{{obj.name}}')" value="{{obj.name}}" class="list-group-item list-group-item-action"><b>{{obj.name}}</b><small><em>({{obj.isprivate}})</em></small></button>
+                {%endfor%}
+                {%else%}
+                <button type="button" id="select_list" class="list-group-item list-group-item-action"><a href="/MyFavorites">Please Create a Favorite List on My Favourites</a></button>
+                {%endif%}
+              </div>
+            
+          </div>
+          <div class="modal-footer">
+            <button
+                id="close"
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+<!-- MORE INFO MODEL -->
+<div
+      class="modal fade"
+      id="moreinfo"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="title_name">Detail Info</h5>
+            
+          </div>
+          <div class="modal-body">
+            <div class="container-fluid">
+              <div class="row">
+                <div class="col"><img id="poster" width="200" src="https://m.media-amazon.com/images/M/MV5BYjcyYTk0N2YtMzc4ZC00Y2E0LWFkNDgtNjE1MzZmMGE1YjY1XkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_SX300.jpg" alt="Image Not Loading">
+                </div>
+                <div class="col">
+                  <!-- <h4 id="title">Title : Ant Man and The Wasp </h4> -->
+                  
+                  <h6 id="release_date">Release Date : </h6>
+                  <h6 id="runtime">Runtime</h6>
+                  <h6 id="genre">Genre</h6>
+                  <h6 id="director">Director</h6>
+                  <h6 id="imdb_rating">ImDB Rating</h6>
+                  <h6 id="plot">Plot</h6>
+                </div>
+              </div>
+          </div>
+          <div class="modal-footer">
+            <button
+              id="close_info"
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+<script src="static/js/new.js"></script>
+{% endblock %}
